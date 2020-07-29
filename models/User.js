@@ -54,3 +54,6 @@ class User{
             throw new InvalidUserException('Empty User Password')
     }
 }
+
+
+module.exports = {User}
