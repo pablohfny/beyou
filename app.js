@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-require('dotenv').config({path: `../env/${process.env.NODE_ENV}`});
+require('dotenv').config({path: `./env/${process.env.ENVIRONMENT}.env`});
 
 const router = require('./routes/Routes');
 

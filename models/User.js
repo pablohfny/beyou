@@ -1,6 +1,6 @@
 const {hash} = require("bcrypt");
-const {DataTypes, Model} = require('sequelize')
-const {sequelize} = require('Models')
+const {DataTypes, Model} = require('sequelize');
+const {sequelize} = await require('./Connection');
 
 /**
  * @swagger

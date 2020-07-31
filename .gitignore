@@ -1,7 +1,9 @@
 # Environment files folder
 env
+
 # Idea
 .idea
+
 # Logs
 logs
 *.log
