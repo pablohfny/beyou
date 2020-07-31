@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const {UserController} = require('../../controllers/Controllers')
 
 /**
  * @swagger
@@ -43,7 +44,8 @@ const app = express();
  *                  email: fake@email.com
  */
 app.post('/users', function (req, res) {
-    res.send('Hello World!')
+    let user = UserController
+    res.status(204).json('Hello World!')
 })
 
 module.exports = app

@@ -1,4 +1,7 @@
 const _ = require('lodash');
+const {hash} = require("bcrypt");
+const {DataTypes, Model} = require('sequelize')
+const {sequelize} = require('Models')
 
 function InvalidUserException(message) {
     this.message = message;
@@ -7,9 +10,9 @@ function InvalidUserException(message) {
     else
         this.stack = (new Error()).stack;
 }
+
 InvalidUserException.prototype = Object.create(Error.prototype);
 InvalidUserException.prototype.name = "InvalidUserException";
-InvalidUserException.prototype.constructor = InvalidUserException;
 
 /**
  * @swagger
@@ -35,25 +38,38 @@ InvalidUserException.prototype.constructor = InvalidUserException;
  *           email: fake@email.com
  *           password: fake_password
  */
-
-class User{
-    constructor(object) {
-            this.validate(object)
-            this.id = object.id || ''
-            this.name = object.name
-            this.email = object.email
-            this.password = object.password
-    }
-
-    validate(user){
-        if (_.isEmpty(user.name))
-            throw new InvalidUserException('Empty User Name')
-        if (_.isEmpty(user.email))
-            throw new InvalidUserException('Empty User Email')
-        if (_.isEmpty(user.password))
-            throw new InvalidUserException('Empty User Password')
-    }
+class User extends Model {
 }
+
+User.init({
+    id: {
+        type: DataTypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        unique: true
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        set(value){this.setDataValue('password', hash(value, 10));}
+    },
+    isInstructor: {
+        type: DataTypes.BOOLEAN
+    }
+}, {
+    timestamps: true,
+    createdAt: true,
+    updatedAt: false,
+    sequelize,
+    modelName: 'User'
+});
 
 
 module.exports = {User}

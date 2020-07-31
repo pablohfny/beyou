@@ -1,11 +1,18 @@
-const {User} = require('../models/User')
-const {UserRepository} = require('../repositories/User')
+const {User} = require('../models/Models')
 
+class UserService {
+    constructor() {
+    }
 
-function createUser(object) {
-    try {
-        let newUser = new User(object);
-    } catch (e) {
-
+    createUser(object) {
+        User.create({name: object.name, email: object.email, password: object.password, isInstructor: false})
+            .then((user) => {
+                    return {User: user, err: null}
+                }
+            ).catch((err) => {
+            return {User: null, err}
+        })
     }
 }
+
+module.exports = {UserService}
