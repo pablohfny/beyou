@@ -30,7 +30,7 @@ router.get('/v1/docs', swaggerUi.setup(swaggerSpec, { explorer: true }));
 
 
 
-router.use('/v1', require('./v1/userRoute'));
+router.use('/v1', require('./v1/UserRoute'));
 
 
 

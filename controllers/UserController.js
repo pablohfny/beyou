@@ -1,8 +1,12 @@
 const {UserService} = require('../services/Services')
-let userService = new UserService();
 
-class UserController{
-    static CreateUser(object){
-        userService.createUser(object);
+class UserController {
+    constructor() {
+    }
+
+    static async CreateUser(object) {
+        return UserService.createUser(object);
     }
 }
+
+module.exports = {UserController}

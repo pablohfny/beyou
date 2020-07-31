@@ -1,18 +1,6 @@
-const _ = require('lodash');
 const {hash} = require("bcrypt");
 const {DataTypes, Model} = require('sequelize')
 const {sequelize} = require('Models')
-
-function InvalidUserException(message) {
-    this.message = message;
-    if ("captureStackTrace" in Error)
-        Error.captureStackTrace(this, InvalidUserException);
-    else
-        this.stack = (new Error()).stack;
-}
-
-InvalidUserException.prototype = Object.create(Error.prototype);
-InvalidUserException.prototype.name = "InvalidUserException";
 
 /**
  * @swagger

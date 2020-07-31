@@ -43,9 +43,9 @@ const {UserController} = require('../../controllers/Controllers')
  *                  name: Higor
  *                  email: fake@email.com
  */
-app.post('/users', function (req, res) {
-    let user = UserController
-    res.status(204).json('Hello World!')
+app.post('/users', async function (req, res) {
+    let user = await UserController.CreateUser(req.body)
+    res.status(204).send(user);
 })
 
 module.exports = app
