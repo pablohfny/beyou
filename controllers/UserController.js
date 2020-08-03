@@ -5,8 +5,8 @@ class UserController {
     }
 
     static async CreateUser(object) {
-        return UserService.createUser(object);
+        return await UserService.createUser(object);
     }
 }
 
-module.exports = {UserController}
+module.exports = UserController

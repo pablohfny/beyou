@@ -5,9 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config({path: `./env/${process.env.ENVIRONMENT}.env`});
 
-const router = require('./routes/Routes');
-
-
 const app = express();
 
 // view engine setup
@@ -20,9 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const router = require('./routes/Routes');
+
 app.use('/api', router);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

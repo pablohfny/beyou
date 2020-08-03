@@ -1,16 +1,10 @@
-module.exports = require('./Repository')(async function(sequelize){
+const sequelize = require('./Repository');
 
-    const User = require('./User')(sequelize);
+const User = require('./User')(sequelize);
 
-    await sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
+sequelize.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
 
-    await sequelize.sync();
+sequelize.sync();
 
-    return {User}
-});
-
-
-
-
-
+module.exports = {User}
 

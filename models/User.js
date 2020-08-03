@@ -1,4 +1,4 @@
-const {hash} = require("bcrypt");
+const {hashSync} = require("bcrypt");
 const {DataTypes, Model} = require('sequelize');
 
 module.exports = function(sequelize){
@@ -53,10 +53,13 @@ module.exports = function(sequelize){
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
-                notEmpty: true,
-                min:8
+                notEmpty: true
             },
-            set(value){this.setDataValue('password', hash(value, 10));}
+            set(value){
+                if (value.length < 8)
+                    throw new Error('Password must be longer or equal to 8 characters')
+                this.setDataValue('password', hashSync(value, 10));
+            }
         },
         isInstructor: {
             type: DataTypes.BOOLEAN

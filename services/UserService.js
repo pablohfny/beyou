@@ -1,21 +1,23 @@
-const {User} = require('../models/Models')
+const {User} = require('../models/Models');
 
 class UserService {
     constructor() {
     }
 
     static async createUser(object) {
-        User.create({name: object.name, email: object.email, password: object.password, isInstructor: false})
+        return await User.create({
+            name: object.name,
+            email: object.email,
+            password: object.password,
+            isInstructor: false
+        })
             .then((user) => {
                     return user;
                 }
-            ).catch((err)=>
-            {
-                console.log(err);
+            ).catch((err) =>{
                 throw err;
-            }
-        )
+        })
     }
 }
 
-module.exports = {UserService}
+module.exports = UserService
