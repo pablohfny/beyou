@@ -1,8 +1,13 @@
 const {Sequelize} = require('sequelize');
 
- const sequelize = async function TestConnection(cb) {
+module.exports = async function TestConnection(cb) {
     try {
-        let seq = new Sequelize(process.env.DATABASE_CONNECTION_STRING, {define: {freezeTableName: true}});
+        let seq = new Sequelize(process.env.DATABASE_CONNECTION_STRING, {
+            define: {
+                freezeTableName: true,
+                schema: process.env.DATABASE_CONNECTION_SCHEMA
+            }
+        });
         await seq.authenticate();
         console.log('Connection has been established successfully.');
         cb(seq);
@@ -11,5 +16,3 @@ const {Sequelize} = require('sequelize');
         throw error;
     }
 }
-
-module.exports = {sequelize}
