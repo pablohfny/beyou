@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
-const {UserController} = require('../../controllers/Controllers')
+const {UserController, passport} = require('../../controllers/Controllers')
+
+app.use(passport.initialize({}));
+app.use(passport.session({}));
 
 /**
  * @swagger
@@ -51,4 +54,34 @@ app.post('/users', async function (req, res) {
     })
 })
 
+/**
+ * @swagger
+ * path:
+ *  /users/login/local:
+ *    post:
+ *      summary: Login and authenticate user session
+ *      tags: [Users]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  email:
+ *                      type: string
+ *                      description: The user email.
+ *                  password:
+ *                      type: string
+ *                      description: The user password.
+ *      responses:
+ *        "204":
+ *           description: User Authenticated.
+ */
+app.post('/users/login/local',
+    passport.authenticate('local', { successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true }, function(req, res){
+        res.status(204);
+    }));
 module.exports = app

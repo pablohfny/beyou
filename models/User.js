@@ -1,7 +1,7 @@
-const {hashSync} = require("bcrypt");
+const {hashSync, compareSync} = require("bcrypt");
 const {DataTypes, Model} = require('sequelize');
 
-module.exports = function(sequelize){
+module.exports = function (sequelize) {
     /**
      * @swagger
      *  components:
@@ -27,6 +27,9 @@ module.exports = function(sequelize){
      *           password: fake_password
      */
     class User extends Model {
+        static verifyPassword(password){
+            return compareSync(password, this.password);
+        }
     }
 
     User.init({
@@ -38,26 +41,25 @@ module.exports = function(sequelize){
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate:{
+            validate: {
                 notEmpty: true
             }
         },
         email: {
             type: DataTypes.STRING,
             unique: true,
-            validate:{
-                isEmail: true
+            validate: {
+                isEmail: true,
+                notEmpty: true
             }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate:{
+            validate: {
                 notEmpty: true
             },
-            set(value){
-                if (value.length < 8)
-                    throw new Error('Password must be longer or equal to 8 characters')
+            set(value) {
                 this.setDataValue('password', hashSync(value, 10));
             }
         },
