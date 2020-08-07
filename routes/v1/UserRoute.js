@@ -79,15 +79,11 @@ module.exports = function (passport) {
     app.post('/users/login/local', function (req, res, next) {
         passport.authenticate('local', function (err, user) {
             if (err)
-                res.status(400).send(err);
+                return res.status(400).send(err);
 
             req.logIn(user, function (error) {
                 if (error)
                     res.status(400).send(error);
-
-                console.log('Inside req.login() callback')
-                console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-                console.log(`req.user: ${JSON.stringify(req.user)}`)
 
                 return res.status(204).send();
             });

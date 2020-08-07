@@ -50,7 +50,6 @@ app.use(session({
     cookie: {secure: false, maxAge: 60000}
 }));
 
-store.sync()
 
 app.use(passport.session());
 
