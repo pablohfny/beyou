@@ -4,6 +4,10 @@ class UserService {
     constructor() {
     }
 
+    static verifyPassword(password){
+        return User.verifyPassword(password);
+    }
+
     static async createUser(object) {
         return await User.create({
             name: object.name,
@@ -38,8 +42,6 @@ class UserService {
                 throw err;
             })
     }
-
-
 }
 
 module.exports = UserService

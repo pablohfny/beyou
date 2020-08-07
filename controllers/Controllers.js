@@ -1,5 +1,6 @@
-const {UserController, passport} = require('./UserController')
+module.exports = function (passport){
+    const UserController = require('./UserController')(passport);
 
 
-
-module.exports ={passport, UserController}
+    return {UserController}
+}

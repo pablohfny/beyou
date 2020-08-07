@@ -1,4 +1,4 @@
-const {hashSync, compareSync} = require("bcrypt");
+const {hashSync} = require("bcrypt");
 const {DataTypes, Model} = require('sequelize');
 
 module.exports = function (sequelize) {
@@ -27,9 +27,6 @@ module.exports = function (sequelize) {
      *           password: fake_password
      */
     class User extends Model {
-        static verifyPassword(password){
-            return compareSync(password, this.password);
-        }
     }
 
     User.init({
@@ -73,6 +70,7 @@ module.exports = function (sequelize) {
         sequelize,
         modelName: 'User'
     });
+
     return User;
 }
 

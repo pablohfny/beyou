@@ -7,6 +7,7 @@ try {
             schema: process.env.DATABASE_CONNECTION_SCHEMA
         }
     });
+
     sequelize.authenticate().then(() => {
         console.log('Connection has been established successfully.');
     });
