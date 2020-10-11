@@ -28,7 +28,9 @@ module.exports = function (passport) {
     router.use('/v1/docs', swaggerUi.serve);
     router.get('/v1/docs', swaggerUi.setup(swaggerSpec, {explorer: true}));
 
-    router.use('/v1', require('./v1/UserRoute')(passport));
+    router.use('/v1', require('./v1/LoginRoute')(passport));
+    router.use('/v1', require('./v1/PartnerRoute'));
+    router.use('/v1', require('./v1/UserRoute'));
 
     return router;
 }

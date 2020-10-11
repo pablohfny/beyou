@@ -1,6 +1,5 @@
-module.exports = function (passport){
-    const UserController = require('./UserController')(passport);
+    const LoginController = require('./LoginController');
+    const PartnerController = require('./PartnerController');
+    const UserController = require('./UserController');
 
-
-    return {UserController}
-}
+    module.exports =  {LoginController, PartnerController, UserController}
