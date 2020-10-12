@@ -20,7 +20,9 @@ module.exports = function (sequelize) {
      *            format: email
      *            description: Email for the user, needs to be unique.
      *          password:
-     *            type: string  
+     *            type: string 
+     *          isPartner:
+     *            type: boolean  
      *        example:
      *           name: Igor
      *           email: fake@email.com
@@ -60,13 +62,20 @@ module.exports = function (sequelize) {
                 this.setDataValue('password', hashSync(value, 10));
             }
         },
-        isInstructor: {
-            type: DataTypes.BOOLEAN
-        }
+        isPartner: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
+        registrationHash:{
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            unique: true,
+        },
+        registrationConfirmed: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        },
     }, {
-        timestamps: true,
-        createdAt: true,
-        updatedAt: false,
         sequelize,
         modelName: 'User'
     });

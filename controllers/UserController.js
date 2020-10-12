@@ -4,8 +4,8 @@ class UserController {
     constructor() {
     }
 
-    static async CreateUser(object) {
-        return await UserService.createUser(object);
+    static async getUser(object) {
+        return await UserService.findUserByEmail(object);
     }
 }
 

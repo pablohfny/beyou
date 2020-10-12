@@ -9,11 +9,11 @@ class PartnerService {
             name: object.name,
             email: object.email,
             password: object.password,
-            isInstructor: true
+            isPartner: true
         })
             .then((partner) => {
-                    return partner;
-                }
+                return partner;
+            }
             ).catch((err) =>{
                 throw err;
         })

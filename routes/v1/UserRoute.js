@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const {UserController} = require('../../controllers/Controllers');
+const {ensureAuthenticated} = require('../auth');
 
     /**
      * @swagger
      * tags:
-     *   name: Users
+     *   name: User
      *   description: User management
      */
 
@@ -13,15 +14,11 @@ const {UserController} = require('../../controllers/Controllers');
      * @swagger
      * path:
      *  /users/:
-     *    post:
-     *      summary: Create a new user
+     *    get:
+     *      summary: Get authenticated user information
      *      tags: [Users]
      *      requestBody:
-     *        required: true
-     *        content:
-     *          application/json:
-     *            schema:
-     *              $ref: '#/components/schemas/User'
+     *        required: false
      *      responses:
      *        "200":
      *          content:
@@ -44,9 +41,11 @@ const {UserController} = require('../../controllers/Controllers');
      *                  email: fake@email.com
      *                  isPartner: false
      */
-    app.post('/users', async function (req, res) {
-        UserController.CreateUser(req.body).then(user => {
-            res.status(201).send({id: user.id, name: user.name, email: user.email, isPartner: user.isInstructor});
+    app.get('/users', 
+    ensureAuthenticated,
+    async function (req, res) {
+        UserController.getUser(req.body).then(user => {
+
         }).catch(err => {
             res.status(400).send(err);
         })

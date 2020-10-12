@@ -30,6 +30,7 @@ module.exports = function (passport) {
 
     router.use('/v1', require('./v1/LoginRoute')(passport));
     router.use('/v1', require('./v1/PartnerRoute'));
+    router.use('/v1', require('./v1/RegistrationRoute'));
     router.use('/v1', require('./v1/UserRoute'));
 
     return router;

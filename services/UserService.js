@@ -4,36 +4,6 @@ class UserService {
     constructor() {
     }
 
-    static async createUser(object) {
-        return await User.create({
-            name: object.name,
-            email: object.email,
-            password: object.password,
-            isInstructor: false
-        })
-            .then((user) => {
-                    return user;
-                }
-            ).catch((err) =>{
-                throw err;
-        })
-    }
-
-    static async createPartner(object) {
-        return await User.create({
-            name: object.name,
-            email: object.email,
-            password: object.password,
-            isInstructor: true
-        })
-            .then((user) => {
-                    return user;
-                }
-            ).catch((err) =>{
-                throw err;
-        })
-    }
-
     static async findUserByEmail(email) {
         return await User.findOne({ where: { email: email }})
             .then((user) => {

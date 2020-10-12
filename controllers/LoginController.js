@@ -3,7 +3,6 @@ const {compareSync} = require("bcrypt");
 const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function (passport) {
-
     passport.use(new LocalStrategy({
             usernameField: 'email'
         },
@@ -12,6 +11,9 @@ module.exports = function (passport) {
                 if (!user || !compareSync(password, user.password))
                     return done('Incorrect username or password!', null);
 
+                if (!user.registrationConfirmed)
+                    return done('Unconfirmed Registration, please check your email!', null);
+                    
                 return done(null, user);
             }).catch(err => {
                 if (err) {
@@ -22,11 +24,11 @@ module.exports = function (passport) {
     ));
 
     passport.serializeUser((user, done) => {
-        done(null, {id: user.id, isInstructor: user.isInstructor});
+        done(null, {id: user.id, isPartner: user.isPartner});
     });
 
-    passport.deserializeUser(function (id, done) {
-        UserService.findUserById(id).then(user => {
+    passport.deserializeUser(function (user, done) {
+        UserService.findUserById(user.id).then(user => {
             if (!user)
                 throw 'Unauthenticated user!';
 

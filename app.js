@@ -38,7 +38,6 @@ let store = new SequelizeStore({
     tableName: 'session'
 });
 
-app.use(passport.initialize());
 app.use(session({
     genid: (req) => {
         return uuid();
@@ -47,9 +46,10 @@ app.use(session({
     store: store,
     resave: false,
     saveUninitialized: false,
-    cookie: {secure: false, maxAge: 60000}
+    cookie: {secure: false, maxAge: 30 * 1000 * 60}
 }));
 
+app.use(passport.initialize());
 
 app.use(passport.session());
 
